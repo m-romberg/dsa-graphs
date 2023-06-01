@@ -78,7 +78,21 @@ class Graph {
   }
 
   /** traverse graph with BDS and returns array of Node values */
-  breadthFirstSearch(start) { }
+  breadthFirstSearch(start) {
+    let toVisitQueue = [start];
+    let seen = new Set();
+
+    while(toVisitQueue.length > 0){
+      let currentNode = toVisitQueue.shift();
+      seen.add(currentNode.value);
+      for (let adj of currentNode.adjacent){
+        if(!seen.has(adj.value)){
+          toVisitQueue.push(adj);
+        }
+      }
+    }
+    return Array.from(seen);
+  }
 
   /** find the distance of the shortest path from the start vertex to the end vertex */
   distanceOfShortestPath(start, end) { }
