@@ -34,17 +34,48 @@ class Graph {
   }
 
   /** remove edge between vertices v1,v2 */
-  removeEdge(v1, v2) { }
+  removeEdge(v1, v2) {
+    v1.adjacent.delete(v2);
+    v2.adjacent.delete(v1);
+  }
 
   /** remove vertex from graph:
    *
    * - remove it from nodes property of graph
    * - update any adjacency lists using that vertex
    */
-  removeVertex(vertex) { }
+  removeVertex(vertex) {
+
+    for (let v of vertex.adjacent) {
+      v.adjacent.delete(vertex);
+    }
+
+    this.nodes.delete(vertex);
+  }
 
   /** traverse graph with DFS and returns array of Node values */
-  depthFirstSearch(start) { }
+  depthFirstSearch(start) {
+    // add node to stack array
+    // add all of that nodes adjacents to the stack
+    // track nodes we've seen
+    //
+
+    let toVisitStack = [start];
+    let seen = new Set();
+
+    while (toVisitStack.length > 0) {
+      console.log('this is the stack', toVisitStack)
+      let currentNode = toVisitStack.pop();
+      seen.add(currentNode.value);
+      for (let adj of currentNode.adjacent) {
+        if (!seen.has(adj.value)) {
+          toVisitStack.push(adj);
+        }
+      }
+    }
+
+    return Array.from(seen);
+  }
 
   /** traverse graph with BDS and returns array of Node values */
   breadthFirstSearch(start) { }
