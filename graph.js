@@ -54,27 +54,42 @@ class Graph {
   }
 
   /** traverse graph with DFS and returns array of Node values */
-  depthFirstSearch(start) {
-    // add node to stack array
-    // add all of that nodes adjacents to the stack
-    // track nodes we've seen
-    //
+  // depthFirstSearch(start) {
+  //   // add node to stack array
+  //   // add all of that nodes adjacents to the stack
+  //   // track nodes we've seen
+  //   //
 
-    let toVisitStack = [start];
-    let seen = new Set();
+  //   let toVisitStack = [start];
+  //   let seen = new Set();
 
-    while (toVisitStack.length > 0) {
-      console.log('this is the stack', toVisitStack)
-      let currentNode = toVisitStack.pop();
-      seen.add(currentNode.value);
-      for (let adj of currentNode.adjacent) {
-        if (!seen.has(adj.value)) {
-          toVisitStack.push(adj);
-        }
+  //   while (toVisitStack.length > 0) {
+  //     // console.log('this is the stack', toVisitStack)
+  //     let currentNode = toVisitStack.pop();
+  //     seen.add(currentNode.value);
+  //     for (let adj of currentNode.adjacent) {
+  //       if (!seen.has(adj.value)) {
+  //         toVisitStack.push(adj);
+  //       }
+  //     }
+  //   }
+
+  //   return Array.from(seen);
+  // }
+
+  /** traverse graph recursively with DFS and returns array of Node values */
+  depthFirstSearch(start, seen=new Set(), values=new Set()) {
+    values.add(start.value)
+
+    for (let child of start.adjacent) {
+      if (!seen.has(start)) {
+        seen.add(start);
+        console.log('seen', seen)
+        values.add(this.depthFirstSearch(child, seen=seen, values=values))
       }
     }
-
-    return Array.from(seen);
+    console.log('values', values)
+    return Array.from(values);
   }
 
   /** traverse graph with BDS and returns array of Node values */
@@ -95,43 +110,71 @@ class Graph {
   }
 
   /** find the distance of the shortest path from the start vertex to the end vertex */
-  distanceOfShortestPath(start, end) {
-  //base case => currentNode = end
-    //              A
-    //            /   \
-    //          B       C
-    //            \   /
-    //              D
-    //
-    if (!this.nodes.has(start) || !this.nodes.has(end)){
-      return undefined;
-    }
-    let paths = [];
-    let seen = new Set ();
+//   distanceOfShortestPath(start, end, distance=0) {
+//     //              A
+//     //            /   \
+//     //          B       C
+//     //            \   /
+//     //              D
+//     //
 
-    for( let child of start.adjacent){
-      if (child === end){
-        seen.add(child);
-        return 1;
-      }
-    }
-    for (let child of start.adjacent){
-      if (!seen.has(child)){
-        seen.add(child);
-        paths.push(1 + this.distanceOfShortestPath(child, end));
-      }
-    }
+
+//     //
+//     //            R
+//     //         /  |  \
+//     //        I - T - H
+//     //                |
+//     //                M
 
 
 
-    return Math.min(...paths);
-  }
-
-  /** traverse graph recursively with DFS and returns array of Node values */
-  depthFirstSearchRecursive(start) { }
-
-  /** traverse graph recusively with BDS and returns array of Node values */
+//   /** traverse graph recusively with BDS and returns array of Node values */
   breadthFirstSearchRecursive(start) { }
 }
 
 module.exports = { Graph, Node }
+
+// for(let child of start.adjacent){
+  //   // console.log('start', start, 'child', child)
+  //   if (child === end){
+    //     seen.add(child);
+    //     paths.push(1);
+    //   } else if (!seen.has(child)) {
+      //     seen.add(child);
+      //     console.log('seen', seen)
+      //     let distance = this.distanceOfShortestPath(child,end);
+      //     if (distance !== undefined) {
+        //       paths.push(1 + distance);
+        //     }
+        //   } else if (child === start) {
+          //     return undefined
+          //   }
+          // }
+
+          // for (let child of start.adjacent){
+            //   if (!seen.has(child)){
+              //     seen.add(child);
+              //     paths.push(1 + this.distanceOfShortestPath(child, end));
+              //   }
+              // }
+    //     if (!this.nodes.has(start) || !this.nodes.has(end)){
+    //       return undefined;
+    //     }
+
+    //     if (start === end) {
+    //       return 0;
+    //     }
+
+    //     let paths = [];
+    //     let seen = new Set ();
+    //     seen.add(start);
+
+
+    //     for (let child of start.adjacent) {
+    //       if (distance !== undefined) {
+    //         seen.add(child);
+    //         paths.push(1 + this.distanceOfShortestPath(child, end));
+    //       }
+    //     }
+    //     return Math.min(...paths);
+    //   }

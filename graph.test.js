@@ -152,9 +152,9 @@ describe("DFS", function () {
     //                       \     \  /
     //                         T --- W
     //
-    //stack[P, X, W, X]
-    //seen [S, U, V]
-    //current [V]
+    //stack[]
+    //seen []
+    //current []
     let graph = new Graph();
     let S = new Node("S");
     let P = new Node("P");
