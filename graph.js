@@ -22,7 +22,9 @@ class Graph {
 
   /** add array of new Node instances and adds to them to nodes property. */
   addVertices(vertexArray) {
-
+    for (const vertex of vertexArray){
+      this.addVertex(vertex);
+    }
    }
 
   /** add edge between vertices v1,v2 */
