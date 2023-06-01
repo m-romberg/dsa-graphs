@@ -82,6 +82,12 @@ class Graph {
 
   /** find the distance of the shortest path from the start vertex to the end vertex */
   distanceOfShortestPath(start, end) { }
+
+  /** traverse graph recursively with DFS and returns array of Node values */
+  depthFirstSearchRecursive(start) { }
+
+  /** traverse graph recusively with BDS and returns array of Node values */
+  breadthFirstSearchRecursive(start) { }
 }
 
 module.exports = { Graph, Node }
