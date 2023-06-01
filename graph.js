@@ -84,8 +84,27 @@ class Graph {
     for (let child of start.adjacent) {
       if (!seen.has(start)) {
         seen.add(start);
-        console.log('seen', seen)
+        // console.log('seen', seen)
         values.add(this.depthFirstSearch(child, seen=seen, values=values))
+      }
+    }
+    // console.log('values', values)
+    return Array.from(values);
+  }
+
+  breadthFirstSearch(start, seen=new Set(), values=new Set(start.value)) {
+    console.log("values=", values);
+
+    for (let child of start.adjacent) {
+      if (!seen.has(child)){
+        values.add(child.value);
+      }
+    }
+    for (let child of start.adjacent) {
+      if (!seen.has(start)) {
+        seen.add(start);
+        console.log('seen', seen)
+        values.add(...Array.from(this.breadthFirstSearch(child, seen=seen, values=values)))
       }
     }
     console.log('values', values)
@@ -93,21 +112,21 @@ class Graph {
   }
 
   /** traverse graph with BDS and returns array of Node values */
-  breadthFirstSearch(start) {
-    let toVisitQueue = [start];
-    let seen = new Set();
+  // breadthFirstSearch(start) {
+  //   let toVisitQueue = [start];
+  //   let seen = new Set();
 
-    while(toVisitQueue.length > 0){
-      let currentNode = toVisitQueue.shift();
-      seen.add(currentNode.value);
-      for (let adj of currentNode.adjacent){
-        if(!seen.has(adj.value)){
-          toVisitQueue.push(adj);
-        }
-      }
-    }
-    return Array.from(seen);
-  }
+  //   while(toVisitQueue.length > 0){
+  //     let currentNode = toVisitQueue.shift();
+  //     seen.add(currentNode.value);
+  //     for (let adj of currentNode.adjacent){
+  //       if(!seen.has(adj.value)){
+  //         toVisitQueue.push(adj);
+  //       }
+  //     }
+  //   }
+  //   return Array.from(seen);
+  // }
 
   /** find the distance of the shortest path from the start vertex to the end vertex */
 //   distanceOfShortestPath(start, end, distance=0) {
@@ -129,7 +148,6 @@ class Graph {
 
 
 //   /** traverse graph recusively with BDS and returns array of Node values */
-  breadthFirstSearchRecursive(start) { }
 }
 
 module.exports = { Graph, Node }
