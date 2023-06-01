@@ -95,7 +95,37 @@ class Graph {
   }
 
   /** find the distance of the shortest path from the start vertex to the end vertex */
-  distanceOfShortestPath(start, end) { }
+  distanceOfShortestPath(start, end) {
+  //base case => currentNode = end
+    //              A
+    //            /   \
+    //          B       C
+    //            \   /
+    //              D
+    //
+    if (!this.nodes.has(start) || !this.nodes.has(end)){
+      return undefined;
+    }
+    let paths = [];
+    let seen = new Set ();
+
+    for( let child of start.adjacent){
+      if (child === end){
+        seen.add(child);
+        return 1;
+      }
+    }
+    for (let child of start.adjacent){
+      if (!seen.has(child)){
+        seen.add(child);
+        paths.push(1 + this.distanceOfShortestPath(child, end));
+      }
+    }
+
+
+
+    return Math.min(...paths);
+  }
 
   /** traverse graph recursively with DFS and returns array of Node values */
   depthFirstSearchRecursive(start) { }
